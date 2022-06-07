@@ -1,0 +1,20 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Trigger the Playwright Script
+    runs-on: ubuntu-latest
+    steps:
+      - name: Time-out to be service to be up.
+        run: |
+          echo "Wait for 10 seconds to wait services to be up"
+          sleep 10s
+      - uses: convictional/trigger-workflow-and-wait@v1.6.3
+        with:
+          owner: 4M01
+          repo: e2e
+          github_token: ${{ secrets.E2E }}
+          workflow_file_name: playwright.yml
